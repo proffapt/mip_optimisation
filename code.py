@@ -29,7 +29,6 @@ for i in range(len(food_data)):
 
 # define decision x for each food item
 foods = list(food_data['Food'])
-# lower bound is set to 1 to make sure we get atleast 1 serving
 x = model.addVars(foods, lb=0, ub=gp.GRB.INFINITY, vtype=types, name='servings')
 
 # define the budget constraints
