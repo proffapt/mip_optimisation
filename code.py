@@ -29,15 +29,13 @@ for i in range(len(food_data)):
 
 # define decision x for each food item
 foods = list(food_data['Food'])
+# lower bound is set to 1 to make sure we get atleast 1 serving
 x = model.addVars(foods, lb=0, ub=gp.GRB.INFINITY, vtype=types, name='servings')
 
 # define the budget constraints
 costs = dict(zip(foods, food_data['Cost']))
 model.addConstr(gp.quicksum(costs[i] * x[i] for i in foods) <= budget_up)
 model.addConstr(gp.quicksum(costs[i] * x[i] for i in foods) >= budget_low)
-
-# define minimum quantity constraint
-model.addConstrs((x[i] >= 0.1 for i in foods), name='quantity constraint')
 
 # find correct row from male_data or female_data based on age and gender
 if gender == 'M':
